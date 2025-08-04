@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacie en ligne</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Pharmacie</a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="{% url 'product_list' %}">Catalogue</a>
+            <a class="nav-link" href="{% url 'cart' %}">Panier</a>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a class="nav-link" href="{% url 'manage_inventory' %}">Gestion des stocks</a>
+                {% endif %}
+                <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                <a class="nav-link" href="{% url 'register' %}">Inscription</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

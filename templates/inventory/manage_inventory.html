@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Gestion des stocks</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité en stock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inventory in inventories %}
+                <tr>
+                    <td>{{ inventory.product.name }}</td>
+                    <td {% if inventory.is_low_stock %}class="text-danger"{% endif %}>{{ inventory.quantity }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ inventory.product.id }}">
+                            <input type="number" name="quantity" value="{{ inventory.quantity }}" class="form-control d-inline w-50">
+                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

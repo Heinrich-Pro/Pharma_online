@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Votre panier</h2>
+    {% if order %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }} €</td>
+                        <td>{{ item.get_total|floatformat:2 }} €</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td><strong>{{ order.total_price }} €</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
+        <a href="{% url 'confirm_order' %}" class="btn btn-success">Confirmer la commande</a>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+{% endblock %}

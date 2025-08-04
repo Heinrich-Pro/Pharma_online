@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Bienvenue à la Pharmacie en ligne</h1>
+    <p>Parcourez notre catalogue de médicaments et passez vos commandes en ligne. Récupérez et payez sur place.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary">Voir le catalogue</a>
+{% endblock %}

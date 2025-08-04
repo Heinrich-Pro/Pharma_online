@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Confirmation de commande</h2>
+    <p>Votre commande n°{{ order.id }} a été confirmée.</p>
+    <p>Merci de venir récupérer vos médicaments à la pharmacie. Vous paierez sur place.</p>
+    <a href="/media/invoices/invoice_{{ order.id }}.pdf" class="btn btn-primary" download>Télécharger la facture</a>
+{% endblock %}
