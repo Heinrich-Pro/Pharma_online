@@ -9,97 +9,132 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
+# ===== CHARGEMENT DES VARIABLES D'ENVIRONNEMENT =====
+
+# Chargement du fichier .env s'il existe
+load_dotenv()
+
+# ===== CONFIGURATION DES CHEMINS =====
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR pointe vers le répertoire racine du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# ===== CONFIGURATION DE SÉCURITÉ =====
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('django-insecure-$nug&&@gy_d@obm@l(*=ljtqd_fsc0yp&fgjp7=jjcag^!_zie', 'your-default-secret-key-for-local-development')
+# Clé secrète pour le chiffrement des sessions et autres données sensibles
+# Récupérée depuis les variables d'environnement
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-$nug&&@gy_d@obm@l(*=ljtqd_fsc0yp&fgjp7=jjcag^!_zie')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Mode debug : affiche les erreurs détaillées (récupéré depuis les variables d'environnement)
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*.onrender.com']
+# Liste des hôtes autorisés à accéder à l'application
+# Récupérée depuis les variables d'environnement
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,*.onrender.com').split(',')
 
 
-# Application definition
+# ===== DÉFINITION DES APPLICATIONS =====
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # Applications locales
-    'accounts',
-    'products',
-    'orders',
-    'inventory',
+    # Applications Django par défaut
+    'django.contrib.admin',           # Interface d'administration
+    'django.contrib.auth',            # Système d'authentification
+    'django.contrib.contenttypes',    # Framework de contenu
+    'django.contrib.sessions',        # Gestion des sessions
+    'django.contrib.messages',        # Système de messages
+    'django.contrib.staticfiles',     # Gestion des fichiers statiques
+    
+    # Applications locales du projet
+    'accounts',                       # Gestion des comptes utilisateurs
+    'products',                       # Gestion des médicaments et catégories
+    'orders',                         # Gestion des commandes et panier
+    'inventory',                      # Gestion des stocks et inventaires
+    
     # Applications tierces
-    'crispy_forms',
-    'crispy_bootstrap4',
+    'crispy_forms',                  # Rendu élégant des formulaires
+    'crispy_bootstrap4',             # Intégration Bootstrap 4 avec Crispy Forms
 ]
 
+
+# ===== CONFIGURATION DES MIDDLEWARES =====
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for static files
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',           # Sécurité générale
+    'django.contrib.sessions.middleware.SessionMiddleware',    # Gestion des sessions
+    'whitenoise.middleware.WhiteNoiseMiddleware',             # Servir les fichiers statiques (production)
+    'django.middleware.common.CommonMiddleware',              # Middleware commun
+    'django.middleware.csrf.CsrfViewMiddleware',              # Protection CSRF
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Authentification
+    'django.contrib.messages.middleware.MessageMiddleware',    # Gestion des messages
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # Protection clickjacking
 ]
+
+
+# ===== CONFIGURATION DES TEMPLATES =====
 
 ROOT_URLCONF = 'pharmacy_online.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [],                    # Répertoires de templates personnalisés
+        'APP_DIRS': True,             # Recherche automatique dans les apps
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',      # Variable request
+                'django.contrib.auth.context_processors.auth',     # Variable user
+                'django.contrib.messages.context_processors.messages', # Messages
             ],
         },
     },
 ]
 
+# Configuration WSGI pour le déploiement
 WSGI_APPLICATION = 'pharmacy_online.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# ===== CONFIGURATION DE LA BASE DE DONNÉES =====
 
+# Configuration de la base de données avec variables d'environnement
 DATABASES = {
     'default': {
-'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pharmacy_db',
-        'USER': 'your_username',
-        'PASSWORD': 'your_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('DB_NAME', 'pharmacy_db'),
+        'USER': os.environ.get('DB_USER', 'your_username'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'your_password'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
-# Database configuration using dj-database-url
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://pharma_db_849g_user:ERkXrBJIg7TGGvFiNcE3b5bgyt2kZaBH@dpg-d28t5sali9vc7398q40g-a/pharma_db_849g',
-        conn_max_age=600
-    )
-}
+# Configuration de la base de données avec dj-database-url (production)
+# Utilise une variable d'environnement ou une URL de connexion
+# Priorité à DATABASE_URL si elle existe et est valide
+database_url = os.environ.get('DATABASE_URL')
+if database_url and database_url != 'postgresql://username:password@host:port/database_name':
+    try:
+        DATABASES = {
+            'default': dj_database_url.config(
+                default=database_url,
+                conn_max_age=600  # Durée de vie maximale des connexions (10 minutes)
+            )
+        }
+    except Exception:
+        # En cas d'erreur de parsing, utiliser la configuration locale
+        pass
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -135,15 +170,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# URL des fichiers statiques
+STATIC_URL = os.environ.get('STATIC_URL', '/static/')
+
+# Répertoire des fichiers statiques collectés
+STATIC_ROOT = os.path.join(BASE_DIR, os.environ.get('STATIC_ROOT', 'staticfiles'))
+
+# Configuration des fichiers statiques
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Configuration des médias
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = os.environ.get('MEDIA_URL', '/media/')
+
+# Répertoire des fichiers media
+MEDIA_ROOT = os.path.join(BASE_DIR, os.environ.get('MEDIA_ROOT', 'media'))
 
 # Configuration Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -152,10 +194,88 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 # Custom user model
-AUTH_USER_MODEL = 'accounts.CustomUser'
+# AUTH_USER_MODEL = 'accounts.CustomUser'  # Commenté car le modèle CustomUser n'existe pas
 
 # Login/Logout redirect
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ===== CONFIGURATION DES MESSAGES =====
+
+# Configuration des messages utilisateur
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# ===== CONFIGURATION DES SESSIONS =====
+
+# Durée de vie des sessions (en secondes)
+SESSION_COOKIE_AGE = 3600 * 24 * 7  # 7 jours
+
+# ===== CONFIGURATION DES LOGS =====
+
+# Configuration des logs
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+# ===== CONFIGURATION DE SÉCURITÉ =====
+
+# Protection CSRF
+CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False').lower() == 'true'
+
+# Session sécurisée
+SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False').lower() == 'true'
+
+# ===== CONFIGURATION EMAIL =====
+
+# Configuration email si les variables sont définies
+if os.environ.get('EMAIL_HOST'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+else:
+    # Fallback vers la console pour le développement
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# ===== CONFIGURATION CACHE =====
+
+# Configuration Redis si disponible
+if os.environ.get('REDIS_URL'):
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.environ.get('REDIS_URL'),
+        }
+    }
+else:
+    # Cache local par défaut
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }

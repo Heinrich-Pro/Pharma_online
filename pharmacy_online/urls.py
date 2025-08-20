@@ -14,7 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 # pharmacy_online/urls.py (URLs principales)
+# Configuration des routes principales du projet
+# Ce fichier définit la structure générale de navigation de l'application
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -22,16 +26,44 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from products.views import home
 
+# ===== CONFIGURATION DES PATTERNS D'URLS PRINCIPAUX =====
+
 urlpatterns = [
+    # Route d'administration Django (interface de gestion)
     path('admin/', admin.site.urls),
+    
+    # Route d'accueil principale : affiche la page d'accueil avec les produits en vedette
     path('', home, name='home'),
+    
+    # ===== INCLUSION DES URLS DES APPLICATIONS =====
+    
+    # Application products : gestion des médicaments et catégories
+    # Toutes les URLs commençant par /products/ sont gérées par products.urls
     path('products/', include('products.urls')),
+    
+    # Application orders : gestion des commandes et panier
+    # Toutes les URLs commençant par /orders/ sont gérées par orders.urls
     path('orders/', include('orders.urls')),
+    
+    # Application accounts : gestion des comptes utilisateurs
+    # Toutes les URLs commençant par /accounts/ sont gérées par accounts.urls
     path('accounts/', include('accounts.urls')),
+    
+    # Application inventory : gestion des stocks et inventaires
+    # Toutes les URLs commençant par /inventory/ sont gérées par inventory.urls
     path('inventory/', include('inventory.urls')),
+    
+    # URLs d'authentification Django par défaut
+    # Inclut login/, logout/, password_change/, etc.
     path('auth/', include('django.contrib.auth.urls')),
 ]
 
-# Servir les fichiers media en développement
+# ===== CONFIGURATION DES FICHIERS MÉDIA (DÉVELOPPEMENT) =====
+
+# Servir les fichiers media en développement uniquement
+# En production, ces fichiers doivent être servis par le serveur web (nginx, etc.)
 if settings.DEBUG:
+    # Ajoute les routes pour servir les fichiers uploadés (images, etc.)
+    # MEDIA_URL : URL de base pour accéder aux fichiers media
+    # MEDIA_ROOT : répertoire physique où sont stockés les fichiers
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

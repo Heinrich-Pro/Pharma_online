@@ -26,7 +26,7 @@ def inventory_dashboard(request):
     # Médicaments les plus vendus (basé sur les mouvements de sortie)
     popular_medicines = Medicine.objects.annotate(
         sold_quantity=Sum('stock_movements__quantity',
-                          filter=F('stock_movements__movement_type') = 'out')
+                          filter=F('stock_movements__movement_type') == 'out')
     ).order_by('-sold_quantity')[:5]
 
     # Mouvements récents
