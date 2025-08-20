@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/pharmacy_online2.iml" filepath="$PROJECT_DIR$/.idea/pharmacy_online2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Project Pharma.iml" filepath="$PROJECT_DIR$/.idea/Project Pharma.iml" />
+>>>>>>> develop
     </modules>
   </component>
 </project>

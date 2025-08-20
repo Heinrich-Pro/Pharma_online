@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Django==4.2.7
 psycopg2-binary==2.9.7
 Pillow==10.0.1
@@ -5,3 +6,66 @@ django-crispy-forms==2.0
 crispy-bootstrap4==2022.1
 reportlab==4.0.4
 django-extensions==3.2.3
+=======
+# requirements.txt
+# Dépendances Python requises pour le projet Pharma_online
+# Ce fichier liste tous les packages nécessaires au fonctionnement de l'application
+
+# ===== FRAMEWORK DJANGO ET CORE =====
+
+# Framework web principal - version LTS stable
+asgiref==3.9.1
+
+# Django - framework web principal pour le projet
+Django==4.2.7
+
+# ===== FORMULAIRES ET INTERFACE UTILISATEUR =====
+
+# Rendu élégant des formulaires Django avec Bootstrap
+crispy-bootstrap4==2022.1
+
+# Intégration de Crispy Forms avec Django
+django-crispy-forms==2.0
+
+# ===== BASE DE DONNÉES =====
+
+# Configuration de base de données via URL (pour le déploiement)
+dj-database-url==3.0.1
+
+# Pilote PostgreSQL pour Python (nécessaire pour la base de données)
+psycopg2-binary==2.9.7
+
+# ===== TRAITEMENT DES IMAGES =====
+
+# Bibliothèque de traitement d'images (pour les photos de médicaments)
+Pillow==10.0.1
+
+# ===== GÉNÉRATION DE PDF =====
+
+# Génération de factures PDF avec ReportLab
+reportlab==4.0.4
+
+# ===== DÉPLOIEMENT ET PRODUCTION =====
+
+# Serveur WSGI pour la production
+gunicorn==23.0.0
+
+# Gestion des fichiers statiques en production
+whitenoise==6.9.0
+
+# ===== UTILITAIRES ET OUTILS =====
+
+# Extensions Django utiles (shell_plus, etc.)
+django-extensions==3.2.3
+
+# Gestion des packages et métadonnées
+packaging==25.0
+
+# Parser SQL pour Django
+sqlparse==0.5.3
+
+# ===== VARIABLES D'ENVIRONNEMENT =====
+
+# Chargement des variables d'environnement depuis un fichier .env
+python-dotenv==1.0.0
+>>>>>>> develop

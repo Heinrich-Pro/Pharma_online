@@ -1,0 +1,59 @@
+# ===== CONFIGURATION DE LA BASE DE DONNÉES =====
+
+# Configuration PostgreSQL locale (développement)
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=pharmacy_db
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+
+# Configuration PostgreSQL production (Render.com)
+DATABASE_URL=postgresql://username:password@host:port/database_name
+
+# ===== CONFIGURATION DJANGO =====
+
+# Clé secrète Django (à changer en production)
+SECRET_KEY=your-secret-key-here
+
+# Mode debug (True pour développement, False pour production)
+DEBUG=True
+
+# Hôtes autorisés
+ALLOWED_HOSTS=localhost,127.0.0.1,*.onrender.com
+
+# ===== CONFIGURATION DES FICHIERS STATIQUES =====
+
+# URL des fichiers statiques
+STATIC_URL=/static/
+
+# Répertoire des fichiers statiques collectés
+STATIC_ROOT=staticfiles/
+
+# URL des fichiers media (uploads)
+MEDIA_URL=/media/
+
+# Répertoire des fichiers media
+MEDIA_ROOT=media/
+
+# ===== CONFIGURATION DE SÉCURITÉ =====
+
+# Protection CSRF
+CSRF_COOKIE_SECURE=False
+
+# Session sécurisée
+SESSION_COOKIE_SECURE=False
+
+# ===== CONFIGURATION EMAIL (optionnel) =====
+
+# Serveur SMTP pour l'envoi d'emails
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password
+
+# ===== CONFIGURATION CACHE (optionnel) =====
+
+# URL Redis pour le cache (si utilisé)
+REDIS_URL=redis://localhost:6379/0

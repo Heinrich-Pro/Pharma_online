@@ -1,0 +1,152 @@
+# ===== PYTHON =====
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# ===== VARIABLES D'ENVIRONNEMENT =====
+
+# Fichier .env contenant les variables sensibles
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ===== BASE DE DONNÉES =====
+
+# Fichiers de base de données
+*.db
+*.sqlite3
+
+# ===== FICHIERS STATIQUES ET MÉDIA =====
+
+# Fichiers statiques collectés
+staticfiles/
+
+# Fichiers media uploadés
+media/
+
+# ===== LOGS =====
+
+# Fichiers de logs
+logs/
+*.log
+
+# ===== ENVIRONNEMENT VIRTUEL =====
+
+# Environnement virtuel Python
+.venv/
+venv/
+ENV/
+env/
+
+# ===== IDE ET ÉDITEURS =====
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ===== SYSTÈME =====
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ===== DÉPLOIEMENT =====
+
+# Fichiers de déploiement temporaires
+*.tmp
+*.temp
+
+# ===== SÉCURITÉ =====
+
+# Clés privées et certificats
+*.pem
+*.key
+*.crt
+*.p12
+
+# ===== AUTRES =====
+
+# Fichiers temporaires
+*.bak
+*.backup
+*.old
